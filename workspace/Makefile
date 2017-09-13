@@ -6,7 +6,7 @@ GOPATH := $(shell pwd):$(shell pwd)/vendor
 export GOPATH
 export CGO_ENABLED=0
 
-NAME=CHANGE_ME
+NAME=deploy-status
 PACKAGE=github.com/previousnext/$(NAME)
 
 # Build binaries for linux/amd64 and darwin/amd64

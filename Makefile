@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 VERSION=$(shell git describe --tags --always)
-IMAGE=previousnext/CHANGE_ME
+IMAGE=previousnext/deploy-status
 
 release: build push
 

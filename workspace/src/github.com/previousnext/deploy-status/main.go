@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strings"
 
 	"github.com/alecthomas/kingpin"
 	"github.com/google/go-github/github"
@@ -13,8 +11,13 @@ import (
 )
 
 var (
-	token        = kingpin.Flag("token", "Your GitHub OAuth access token").String()
-	deploymentId = kingpin.Arg("id", "The Deployment ID").String()
+	token        = kingpin.Arg("token", "Your GitHub OAuth access token").String()
+	deploymentID = kingpin.Arg("id", "The Deployment ID").String()
+	ref          = kingpin.Arg("ref", "The Git reference.").String()
+	desc         = kingpin.Arg("desc", "The description").String()
+	owner        = kingpin.Arg("owner", "The repository owner").String()
+	repo         = kingpin.Arg("repo", "The repository name").String()
+	state        = kingpin.Arg("state", "The Deployment state to set").Default("pending").String()
 )
 
 func main() {
@@ -28,4 +31,23 @@ func main() {
 
 	client := github.NewClient(tc)
 
+	deploymentRequest := &github.DeploymentRequest{
+		Ref:         github.String(*ref),
+		Description: github.String(*desc),
+	}
+
+	deployment, _, err := client.Repositories.CreateDeployment(ctx, *owner, *repo, deploymentRequest)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(deployment.ID)
+
+	statusRequest := &github.DeploymentStatusRequest{}
+	status, _, err := client.Repositories.CreateDeploymentStatus(ctx, *owner, *repo, *deployment.ID, statusRequest)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(status.State)
 }

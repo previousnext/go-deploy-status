@@ -1,9 +1,9 @@
-PNX Project: Go Edition
+Deploy Status
 =======================
 
-[![CircleCI](https://circleci.com/gh/previousnext/CHANGE_ME.svg?style=svg)](https://circleci.com/gh/previousnext/CHANGE_ME)
+[![CircleCI](https://circleci.com/gh/previousnext/go-deploy-status.svg?style=svg)](https://circleci.com/gh/previousnext/go-deploy-status)
 
-**Maintainer**: CHANGE ME
+**Maintainer**: Kim Pepper
 
 This is a brief description on what the project does.
 
