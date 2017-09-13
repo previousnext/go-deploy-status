@@ -13,9 +13,9 @@ import (
 
 var (
 	app   = kingpin.New("deploy-status", "A command-line tool for interacting with GitHub deployment API")
-	owner = app.Flag("owner", "The repository owner").Required().String()
+	owner = app.Flag("owner", "The repository owner or organisation.").Required().String()
 	repo  = app.Flag("repo", "The repository name").Required().String()
-	token = app.Flag("token", "Your GitHub OAuth access token").Required().String()
+	token = app.Flag("token", "The GitHub OAuth access token").Envar("GITHUB_TOKEN").Required().String()
 
 	deployment = app.Command("deployment", "Create a new deployment")
 	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Required().String()
@@ -23,8 +23,8 @@ var (
 	autoMerge  = deployment.Flag("auto-merge", "Auto merge the default branch into the requested ref if it is behind the default branch.").Bool()
 	env        = deployment.Flag("env", "The environment").Default("dev").String()
 
-	status       = app.Command("status", "")
-	state        = status.Arg("state", "The Deployment state to set").Default("pending").String()
+	status       = app.Command("status", "Create a deployment status for a deployment.")
+	state        = status.Flag("state", "The Deployment state to set").Default("pending").String()
 	autoInactive = status.Flag("auto-inactive", "Add a new inactive status to all non-transient, non-production environment deployments with the same repository and environment name as the created status's deployment.").Bool()
 	deploymentID = status.Flag("id", "The Deployment ID").Required().Int()
 	envURL       = status.Flag("env-url", "The environment URL").String()
@@ -42,6 +42,7 @@ func main() {
 		tc := oauth2.NewClient(ctx, ts)
 
 		client := github.NewClient(tc)
+
 		deploymentCommand(ctx, *client)
 
 	case status.FullCommand():
@@ -54,6 +55,7 @@ func main() {
 		client := github.NewClient(tc)
 
 		statusCommand(ctx, *client)
+
 	}
 }
 
@@ -71,7 +73,7 @@ func deploymentCommand(ctx context.Context, client github.Client) {
 		panic(err)
 	}
 
-	fmt.Println(deployment.ID)
+	fmt.Printf(fmt.Sprintf("%d", deployment.GetID()))
 }
 
 func statusCommand(ctx context.Context, client github.Client) {
@@ -86,5 +88,5 @@ func statusCommand(ctx context.Context, client github.Client) {
 		panic(err)
 	}
 
-	fmt.Println(status.State)
+	fmt.Println(status.GetState())
 }

@@ -30,6 +30,33 @@ Commands:
   status --id=ID [<flags>] [<state>]
 ```
 
+### Example
+
+First create a deployment for the branch you are working on:
+
+```
+deploy-status deployment \
+    --token XXXXXXXXXXXXXXXXXXXXXXXX \
+    --owner previousnext \
+    --repo pnx-d8 \
+    --ref deployments \ # The branch name
+    --env pr \ # An environment name.
+    --desc "Test deployment"
+```
+
+This will return the deployment ID. You will need this as the `--id` flag to set the status.
+
+```
+bin/deploy-status_darwin_amd64 status \
+    --token XXXXXXXXXXXXXXXXXXXXXXXX \
+    --owner previousnext \
+    --repo pnx-d8 \
+    --state success \
+    --id 1234567890 \
+    --auto-inactive \
+    --env-url http://pnx-d8-pr46.ci.pnx.com.au/
+```
+
 ## Resources
 
 * [Dave Cheney - Reproducible Builds](https://www.youtube.com/watch?v=c3dW80eO88I)
