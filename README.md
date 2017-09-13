@@ -35,7 +35,7 @@ Commands:
 First create a deployment for the branch you are working on:
 
 ```
-deploy-status deployment \
+deploy-status create deployment \
     --token XXXXXXXXXXXXXXXXXXXXXXXX \
     --owner previousnext \
     --repo pnx-d8 \
@@ -47,7 +47,7 @@ deploy-status deployment \
 This will return the deployment ID. You will need this as the `--id` flag to set the status.
 
 ```
-bin/deploy-status_darwin_amd64 status \
+deploy-status create status \
     --token XXXXXXXXXXXXXXXXXXXXXXXX \
     --owner previousnext \
     --repo pnx-d8 \

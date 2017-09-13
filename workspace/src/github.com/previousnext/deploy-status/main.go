@@ -17,13 +17,15 @@ var (
 	repo  = app.Flag("repo", "The repository name").Required().String()
 	token = app.Flag("token", "The GitHub OAuth access token").Envar("GITHUB_TOKEN").Required().String()
 
-	deployment = app.Command("deployment", "Create a new deployment")
+	create = app.Command("create", "Create a new GitHub API object. See sub-commands for options.")
+
+	deployment = create.Command("deployment", "Create a new deployment")
 	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Required().String()
 	desc       = deployment.Flag("desc", "The description").String()
 	autoMerge  = deployment.Flag("auto-merge", "Auto merge the default branch into the requested ref if it is behind the default branch.").Bool()
 	env        = deployment.Flag("env", "The environment").Default("dev").String()
 
-	status       = app.Command("status", "Create a deployment status for a deployment.")
+	status       = create.Command("status", "Create a deployment status for a deployment.")
 	state        = status.Flag("state", "The Deployment state to set").Default("pending").String()
 	autoInactive = status.Flag("auto-inactive", "Add a new inactive status to all non-transient, non-production environment deployments with the same repository and environment name as the created status's deployment.").Bool()
 	deploymentID = status.Flag("id", "The Deployment ID").Required().Int()
