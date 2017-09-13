@@ -10,24 +10,22 @@ Provides a command line tool for creating GitHub deployments and changing deploy
 ## Usage
 
 ```
-usage: deploy-status --owner=OWNER --repo=REPO --token=TOKEN [<flags>] <command> [<args> ...]
+usage: deploy-status create <command> [<args> ...]
 
-A command-line tool for interacting with GitHub deployment API
+Create a new GitHub API object. See sub-commands for options.
 
 Flags:
   --help         Show context-sensitive help (also try --help-long and --help-man).
-  --owner=OWNER  The repository owner
+  --owner=OWNER  The repository owner or organisation.
   --repo=REPO    The repository name
-  --token=TOKEN  Your GitHub OAuth access token
+  --token=TOKEN  The GitHub OAuth access token
 
-Commands:
-  help [<command>...]
-    Show help.
-
-  deployment --ref=REF [<flags>]
+Subcommands:
+  create deployment --ref=REF [<flags>]
     Create a new deployment
 
-  status --id=ID [<flags>] [<state>]
+  create status --id=ID [<flags>]
+    Create a deployment status for a deployment.
 ```
 
 ### Example
