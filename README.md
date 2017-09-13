@@ -1,11 +1,34 @@
 Deploy Status
 =======================
 
-[![CircleCI](https://circleci.com/gh/previousnext/go-deploy-status.svg?style=svg)](https://circleci.com/gh/previousnext/go-deploy-status)
+[![CircleCI](https://circleci.com/gh/previousnext/go-deploy-status.svg?style=svg&circle-token=f92a3dbaa70cbf7ee985559bd942a9c8207c11df)](https://circleci.com/gh/previousnext/go-deploy-status)
 
 **Maintainer**: Kim Pepper
 
-This is a brief description on what the project does.
+Provides a command line tool for creating GitHub deployments and changing deployment status.
+
+## Usage
+
+```
+usage: deploy-status --owner=OWNER --repo=REPO --token=TOKEN [<flags>] <command> [<args> ...]
+
+A command-line tool for interacting with GitHub deployment API
+
+Flags:
+  --help         Show context-sensitive help (also try --help-long and --help-man).
+  --owner=OWNER  The repository owner
+  --repo=REPO    The repository name
+  --token=TOKEN  Your GitHub OAuth access token
+
+Commands:
+  help [<command>...]
+    Show help.
+
+  deployment --ref=REF [<flags>]
+    Create a new deployment
+
+  status --id=ID [<flags>] [<state>]
+```
 
 ## Resources
 
