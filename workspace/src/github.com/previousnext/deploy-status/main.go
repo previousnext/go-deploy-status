@@ -32,27 +32,23 @@ var (
 
 func main() {
 
-	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	command := kingpin.MustParse(app.Parse(os.Args[1:]))
+
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: *token},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+
+	client := github.NewClient(tc)
+
+	switch command {
 
 	case deployment.FullCommand():
-		ctx := context.Background()
-		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: *token},
-		)
-		tc := oauth2.NewClient(ctx, ts)
-
-		client := github.NewClient(tc)
 
 		deploymentCommand(ctx, *client)
 
 	case status.FullCommand():
-		ctx := context.Background()
-		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: *token},
-		)
-		tc := oauth2.NewClient(ctx, ts)
-
-		client := github.NewClient(tc)
 
 		statusCommand(ctx, *client)
 
