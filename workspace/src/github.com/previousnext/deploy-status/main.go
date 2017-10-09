@@ -16,12 +16,12 @@ var (
 	owner = app.Flag("owner", "The repository owner or organisation.").Required().String()
 	repo  = app.Flag("repo", "The repository name").Required().String()
 	token = app.Flag("token", "The GitHub OAuth access token").Envar("GITHUB_TOKEN").Required().String()
+	desc  = app.Flag("desc", "The description").String()
 
 	create = app.Command("create", "Create a new GitHub API object. See sub-commands for options.")
 
 	deployment = create.Command("deployment", "Create a new deployment")
 	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Required().String()
-	desc       = deployment.Flag("desc", "The description").String()
 	autoMerge  = deployment.Flag("auto-merge", "Auto merge the default branch into the requested ref if it is behind the default branch.").Bool()
 	env        = deployment.Flag("env", "The environment").Default("dev").String()
 
@@ -80,6 +80,7 @@ func statusCommand(ctx context.Context, client github.Client) {
 		AutoInactive:   github.Bool(*autoInactive),
 		EnvironmentURL: github.String(*envURL),
 		State:          github.String(*state),
+		Description:    github.String(*desc),
 	}
 	status, _, err := client.Repositories.CreateDeploymentStatus(ctx, *owner, *repo, *deploymentID, statusRequest)
 	if err != nil {
