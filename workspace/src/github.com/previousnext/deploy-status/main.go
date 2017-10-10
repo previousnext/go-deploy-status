@@ -24,6 +24,7 @@ var (
 	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Required().String()
 	autoMerge  = deployment.Flag("auto-merge", "Auto merge the default branch into the requested ref if it is behind the default branch.").Bool()
 	env        = deployment.Flag("env", "The environment").Default("dev").String()
+	contexts   = deployment.Flag("contexts", "The required contexts").Strings()
 
 	status       = create.Command("status", "Create a deployment status for a deployment.")
 	state        = status.Flag("state", "The Deployment state to set").Default("pending").String()
@@ -59,11 +60,17 @@ func main() {
 
 func deploymentCommand(ctx context.Context, client github.Client) {
 
+	requiredContexts := []string{}
+	if len(*contexts) > 0 {
+		requiredContexts = *contexts
+	}
+
 	deploymentRequest := &github.DeploymentRequest{
-		Ref:         github.String(*ref),
-		Description: github.String(*desc),
-		AutoMerge:   github.Bool(*autoMerge),
-		Environment: github.String(*env),
+		Ref:              github.String(*ref),
+		Description:      github.String(*desc),
+		AutoMerge:        github.Bool(*autoMerge),
+		Environment:      github.String(*env),
+		RequiredContexts: &requiredContexts,
 	}
 
 	deployment, _, err := client.Repositories.CreateDeployment(ctx, *owner, *repo, deploymentRequest)
