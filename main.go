@@ -13,15 +13,15 @@ import (
 
 var (
 	app   = kingpin.New("deploy-status", "A command-line tool for interacting with GitHub deployment API")
-	owner = app.Flag("owner", "The repository owner or organisation.").Required().String()
-	repo  = app.Flag("repo", "The repository name").Required().String()
+	owner = app.Flag("owner", "The repository owner or organisation.").Envar("CIRCLE_PROJECT_USERNAME").Required().String()
+	repo  = app.Flag("repo", "The repository name").Envar("CIRCLE_PROJECT_REPONAME").Required().String()
 	token = app.Flag("token", "The GitHub OAuth access token").Envar("GITHUB_TOKEN").Required().String()
 	desc  = app.Flag("desc", "The description").String()
 
 	create = app.Command("create", "Create a new GitHub API object. See sub-commands for options.")
 
 	deployment = create.Command("deployment", "Create a new deployment")
-	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Required().String()
+	ref        = deployment.Flag("ref", "The Git reference. Can be a branch, tag or commit ID.").Envar("CIRCLE_BRANCH").Required().String()
 	autoMerge  = deployment.Flag("auto-merge", "Auto merge the default branch into the requested ref if it is behind the default branch.").Bool()
 	env        = deployment.Flag("env", "The environment").Default("dev").String()
 	contexts   = deployment.Flag("contexts", "The required contexts").Strings()
