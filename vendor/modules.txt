@@ -1,0 +1,27 @@
+# github.com/alecthomas/kingpin v2.2.6+incompatible
+github.com/alecthomas/kingpin
+# github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc
+github.com/alecthomas/template
+github.com/alecthomas/template/parse
+# github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf
+github.com/alecthomas/units
+# github.com/golang/protobuf v1.1.0
+github.com/golang/protobuf/proto
+# github.com/google/go-github v15.0.0+incompatible
+github.com/google/go-github/github
+# github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135
+github.com/google/go-querystring/query
+# golang.org/x/net v0.0.0-20180530234432-1e491301e022
+golang.org/x/net/context
+golang.org/x/net/context/ctxhttp
+# golang.org/x/oauth2 v0.0.0-20180603041954-1e0a3fa8ba9a
+golang.org/x/oauth2
+golang.org/x/oauth2/internal
+# google.golang.org/appengine v1.0.0
+google.golang.org/appengine/internal
+google.golang.org/appengine/internal/base
+google.golang.org/appengine/internal/datastore
+google.golang.org/appengine/internal/log
+google.golang.org/appengine/internal/remote_api
+google.golang.org/appengine/internal/urlfetch
+google.golang.org/appengine/urlfetch
