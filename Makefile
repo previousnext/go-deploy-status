@@ -8,7 +8,7 @@ COMMIT=$(shell git rev-list -1 HEAD)
 
 # Builds the project.
 define go_build
-	GOOS=${1} GOARCH=${2} go build -o bin/cognito_auth_${1}_${2} -ldflags='-extldflags "-static"' github.com/previousnext/go-deploy-status
+	GOOS=${1} GOARCH=${2} go build -o bin/deploy-status_${1}_${2} -ldflags='-extldflags "-static"' ${PROJECT}
 endef
 
 # Builds the project.
@@ -23,8 +23,6 @@ lint:
 # Run tests with coverage reporting.
 test:
 	go test -cover ./...
-
-IMAGE=previousnext/go-deploy-status
 
 release-github: build
 	ghr -u previousnext "${VERSION}" ./bin/
