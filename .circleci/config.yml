@@ -1,5 +1,7 @@
 version: 2
+
 jobs:
+
   build:
     docker:
       - image: previousnext/golang:1.12
@@ -22,3 +24,27 @@ jobs:
           destination: raw-test-output
       - store_test_results:
           path: /tmp/test-results
+
+  release_github:
+    docker:
+      - image: previousnext/golang:1.12
+    working_directory: /go/src/github.com/previousnext/go-deploy-status
+    steps:
+      - checkout
+      - run:
+          name: Compile and push release binary to github
+          command: make release-github
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - release_github:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+).*/
+            branches:
+              ignore: /.*/
