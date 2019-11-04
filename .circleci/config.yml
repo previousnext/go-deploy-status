@@ -2,15 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.13
+      - image: previousnext/golang:1.12
     working_directory: ~/code
     environment:
       TEST_RESULTS: /tmp/test-results
     steps:
       - checkout
       - run: mkdir -p $TEST_RESULTS
-      - run: go get github.com/jstemmer/go-junit-report
-      - run: go get github.com/golang/lint/golint
       - run:
           name: Run linting
           command: cd workspace && make lint
