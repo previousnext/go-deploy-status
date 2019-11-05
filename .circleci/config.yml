@@ -4,7 +4,7 @@ jobs:
 
   build:
     docker:
-      - image: previousnext/golang:1.12
+      - image: previousnext/golang:1.13
     working_directory: /go/src/github.com/previousnext/go-deploy-status
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -27,7 +27,7 @@ jobs:
 
   release_github:
     docker:
-      - image: previousnext/golang:1.12
+      - image: previousnext/golang:1.13
     working_directory: /go/src/github.com/previousnext/go-deploy-status
     steps:
       - checkout
