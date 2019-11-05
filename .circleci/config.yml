@@ -42,13 +42,7 @@ workflows:
       - build
   build-n-deploy:
     jobs:
-      - build:
-          filters:  # required since `deploy` has tag filters AND requires `build`
-            tags:
-              only: /.*/
       - release_github:
-          requires:
-            - build
           filters:
             tags:
               only: /^[0-9]+(\.[0-9]+).*/
