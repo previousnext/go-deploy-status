@@ -48,7 +48,7 @@ workflows:
       - build
   build-n-deploy:
     jobs:
-      - build
+      - build:
           filters:
             <<: *filters_release
       - release_github:
