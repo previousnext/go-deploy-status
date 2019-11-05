@@ -35,6 +35,12 @@ jobs:
           name: Compile and push release binary to github
           command: make release-github
 
+filters_release: &filters_release
+  tags:
+    only: /^[0-9]+(\.[0-9]+).*/
+  branches:
+    ignore: /.*/
+
 workflows:
   version: 2
   build:
@@ -42,9 +48,11 @@ workflows:
       - build
   build-n-deploy:
     jobs:
-      - release_github:
+      - build
           filters:
-            tags:
-              only: /^[0-9]+(\.[0-9]+).*/
-            branches:
-              ignore: /.*/
+            <<: *filters_release
+      - release_github:
+          requires:
+            - build
+          filters:
+            <<: *filters_release
