@@ -3,6 +3,7 @@ package create
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/alecthomas/kingpin"
 	"github.com/google/go-github/github"
@@ -21,13 +22,17 @@ func (v *cmdDeployment) run(c *kingpin.ParseContext) error {
 	if len(v.contexts) > 0 {
 		requiredContexts = v.contexts
 	}
-
+	productionEnv := false
+	if strings.HasPrefix(v.env, "prod") {
+		productionEnv = true
+	}
 	deploymentRequest := &github.DeploymentRequest{
-		Ref:              github.String(v.ref),
-		Description:      github.String(v.options.Description),
-		AutoMerge:        github.Bool(v.autoMerge),
-		Environment:      github.String(v.env),
-		RequiredContexts: &requiredContexts,
+		Ref:                   github.String(v.ref),
+		Description:           github.String(v.options.Description),
+		AutoMerge:             github.Bool(v.autoMerge),
+		Environment:           github.String(v.env),
+		RequiredContexts:      &requiredContexts,
+		ProductionEnvironment: &productionEnv,
 	}
 	ctx := context.Background()
 	client := NewGithubClient(ctx, v.options.Token)
